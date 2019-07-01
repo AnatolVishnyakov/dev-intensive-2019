@@ -42,5 +42,30 @@ data class User(
             val (firstName, lastName) = Utils.parseFullName(fullName) // деструтуризация объекта
             return User(id = "$lastId", firstName = firstName, lastName = lastName)
         }
+
+        fun Builder(): Builder {
+            return Builder()
+        }
+    }
+
+    data class Builder (
+        var id: String,
+        var firstName: String?,
+        var lastName: String?,
+        var avatar: String?,
+        var rating: Int = 0,
+        var respect: Int = 0,
+        var lastVisit: Date? = null,
+        var isOnline: Boolean = false
+    ) {
+        fun id(value: String) = apply { this.id = value }
+        fun firstName(value: String?) = apply { this.firstName = value }
+        fun lastName(value: String?) = apply { this.lastName = value }
+        fun avatar(value: String?) = apply { this.lastName = value }
+        fun rating(value: Int) = apply { this.rating = value }
+        fun respect(value: Int) = apply { this.respect = value }
+        fun lastVisit(value: Date?) = apply { this.lastVisit = value }
+        fun isOnline(value: Boolean) = apply { this.isOnline = value }
+        fun build() = User(id, firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
     }
 }
