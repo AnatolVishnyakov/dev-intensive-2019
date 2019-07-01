@@ -14,8 +14,6 @@ data class User(
     val lastVisit: Date? = null,
     val isOnline: Boolean = false
 ) {
-    // Доп. поле класса
-//    val introBit: String
 
     // Вторичный конструктор
     constructor(id: String, firstName: String?, lastName: String?) : this(
@@ -30,8 +28,6 @@ data class User(
 
     // Блок инициализации
     init {
-//        introBit = "ololo"
-
         println(
             "It's Alive!!! \n" +
                     "${if (lastName === "Doe") "His name is ${firstName.orEmpty()} $lastName" else "And his name is ${firstName.orEmpty()} ${lastName.orEmpty()}"}\n"
@@ -47,27 +43,4 @@ data class User(
             return User(id = "$lastId", firstName = firstName, lastName = lastName)
         }
     }
-/*
-    private fun getIntro() = """
-        ololo ololo trololo
-        ololo ololo trololo
-        ololo ololo trololo
-
-        ${"\n\n\n"}
-        $firstName $lastName
-    """.trimIndent()
-
-    // Unit - аналог void в Java
-    fun printMe() = println(
-        """
-            id: $id
-            firstName: $firstName
-            lastName: $lastName
-            avatar: $avatar
-            rating: $rating
-            respect: $respect
-            lastVisit: $lastVisit
-            isOnline: $isOnline
-        """.trimIndent()
-    )*/
 }

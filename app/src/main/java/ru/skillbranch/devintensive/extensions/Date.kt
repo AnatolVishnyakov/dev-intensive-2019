@@ -27,6 +27,29 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     return this
 }
 
+private fun declinationMinutes(minute: Long): String {
+    return when (minute) {
+        1L -> "$minute минуту"
+        in 2..4 -> "$minute минуты"
+        else -> "$minute минут"
+    }
+}
+
+fun Date.humanizeDiff(date: Date = Date()): String {
+    val diffTime = date.time - this.time
+    return when (diffTime) {
+        in 0..SECOND -> "только что"
+        in SECOND..45 * SECOND -> "несколько секунд назад"
+        in 45 * SECOND..75 * SECOND -> "минуту назад"
+        in 75 * SECOND..45 * MINUTE -> "${declinationMinutes(diffTime / MINUTE)} назад"
+        in 45 * MINUTE..75 * MINUTE -> "час назад"
+        in 75 * MINUTE..22 * HOUR -> "${diffTime / HOUR} часов назад"
+        in 22 * HOUR..26 * HOUR -> "день назад"
+        in 26 * HOUR..360 * DAY -> "${diffTime / DAY} дней назад"
+        else -> "более года"
+    }
+}
+
 enum class TimeUnits {
     SECOND,
     MINUTE,

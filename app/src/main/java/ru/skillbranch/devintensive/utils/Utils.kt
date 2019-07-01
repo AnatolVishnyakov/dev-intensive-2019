@@ -4,24 +4,36 @@ import ru.skillbranch.devintensive.extensions.transliterate
 
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
-        val parts: List<String>? = fullName?.split(" ")
-        val firstName = parts?.getOrNull(0)
-        val lastName = parts?.getOrNull(1)
+        return if (fullName.isNullOrBlank()) {
+            null to null
+        } else {
+            val parts: List<String>? = fullName.split(" ")
+            val firstName = parts?.getOrNull(0)
+            val lastName = parts?.getOrNull(1)
 
-        // эквивалент Pair(firstName, lastName)
-        return firstName to lastName
+            // эквивалент Pair(firstName, lastName)
+            firstName to lastName
+        }
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
         val sb = StringBuilder()
         val records = payload.split(" ")
         for (record in records) {
-            sb.append("${record.transliterate()}$divider")
+            if (sb.isNotEmpty()) {
+                sb.append(divider)
+            }
+            sb.append(record.transliterate())
         }
         return sb.toString()
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        return "${firstName?.get(0)}${lastName?.get(0)}"
+        return if (firstName.isNullOrBlank() && lastName.isNullOrBlank()) {
+            null
+        } else {
+            (if (!firstName.isNullOrBlank()) "${firstName[0].toUpperCase()}" else "") +
+                    if (!lastName.isNullOrBlank()) "${lastName[0].toUpperCase()}" else ""
+        }
     }
 }
