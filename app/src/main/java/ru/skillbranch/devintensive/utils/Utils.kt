@@ -7,7 +7,7 @@ object Utils {
         return if (fullName.isNullOrBlank()) {
             null to null
         } else {
-            val parts: List<String>? = fullName.split(" ")
+            val parts: List<String>? = fullName.trim().split(" ")
             val firstName = parts?.getOrNull(0)
             val lastName = parts?.getOrNull(1)
 
@@ -17,15 +17,21 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        val sb = StringBuilder()
-        val records = payload.split(" ")
-        for (record in records) {
-            if (sb.isNotEmpty()) {
-                sb.append(divider)
+        return if (payload != " ") {
+            val sb = StringBuilder()
+            val records = payload
+                .split(" ")
+
+            for (record in records) {
+                if (sb.isNotEmpty()) {
+                    sb.append(divider)
+                }
+                sb.append(record.transliterate())
             }
-            sb.append(record.transliterate())
+            sb.toString()
+        } else {
+            " "
         }
-        return sb.toString()
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
