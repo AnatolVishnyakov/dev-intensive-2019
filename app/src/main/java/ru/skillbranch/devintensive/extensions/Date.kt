@@ -77,19 +77,23 @@ private fun plurals(n: Long): Long {
 }
 
 private fun declension(value: Long, units: TimeUnits): String? {
-    var value = plurals(value)
-    return when (value) {
+    return when (plurals(value)) {
         1L -> DECLENSION_PERIOD["${units.name}_1"]
         in 2..4 -> DECLENSION_PERIOD["${units.name}_2"]
         else -> DECLENSION_PERIOD["${units.name}_5"]
     }
 }
 
+private fun trimToMignight(date: Date) {
+    var calendar = Calendar.getInstance()
+    calendar
+}
+
 fun Date.humanizeDiff(date: Date = Date()): String {
     var prefix = if (this > date) "через " else ""
     var postfix = if (this < date) " назад" else ""
     val diffTime = if (date > this) date.time - this.time else this.time - date.time
-    return when (diffTime) {
+    return when (abs(diffTime)) {
         in 0..SECOND -> "только что"
         in SECOND..45 * SECOND -> "${prefix}несколько секунд$postfix"
         in 45 * SECOND..75 * SECOND -> "${prefix}минуту$postfix"
