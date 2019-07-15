@@ -114,5 +114,12 @@ enum class TimeUnits {
     MINUTE,
     HOUR,
     DAY,
-    YEAR
+    YEAR;
+
+    companion object {
+        // TODO реализовать
+        fun plural(): String {
+            return ""
+        }
+    }
 }
