@@ -84,7 +84,7 @@ private fun declension(value: Long, units: TimeUnits): String? {
     }
 }
 
-private fun trimToMignight(date: Date) {
+private fun trimToMidnight(date: Date) {
     var calendar = Calendar.getInstance()
     calendar
 }
@@ -109,33 +109,32 @@ fun Date.humanizeDiff(date: Date = Date()): String {
     }
 }
 
-// TODO реализовать
 enum class TimeUnits {
     SECOND {
-        override fun plural(value: Int): String {
-            return ""
+        override fun plural(value: Long): String? {
+            return "$value ${declension(value, SECOND)}"
         }
     },
     MINUTE {
-        override fun plural(value: Int): String {
-            return ""
+        override fun plural(value: Long): String? {
+            return "$value ${declension(value, MINUTE)}"
         }
     },
     HOUR {
-        override fun plural(value: Int): String {
-            return ""
+        override fun plural(value: Long): String? {
+            return "$value ${declension(value, HOUR)}"
         }
     },
     DAY {
-        override fun plural(value: Int): String {
-            return ""
+        override fun plural(value: Long): String? {
+            return "$value ${declension(value, DAY)}"
         }
     },
     YEAR {
-        override fun plural(value: Int): String {
-            return ""
+        override fun plural(value: Long): String? {
+            return "$value ${declension(value, YEAR)}"
         }
     };
 
-    abstract fun plural(value: Int): String;
+    abstract fun plural(value: Long): String?
 }
