@@ -112,30 +112,30 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 // TODO реализовать
 enum class TimeUnits {
     SECOND {
-        override fun plural(): String {
+        override fun plural(value: Int): String {
             return ""
         }
     },
     MINUTE {
-        override fun plural(): String {
+        override fun plural(value: Int): String {
             return ""
         }
     },
     HOUR {
-        override fun plural(): String {
+        override fun plural(value: Int): String {
             return ""
         }
     },
     DAY {
-        override fun plural(): String {
+        override fun plural(value: Int): String {
             return ""
         }
     },
     YEAR {
-        override fun plural(): String {
+        override fun plural(value: Int): String {
             return ""
         }
     };
 
-    abstract fun plural(): String;
+    abstract fun plural(value: Int): String;
 }
