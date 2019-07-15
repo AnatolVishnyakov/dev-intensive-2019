@@ -30,16 +30,15 @@ fun String.transliterate(): String {
     return sb.toString()
 }
 
-// TODO реализовать
 fun String.truncate(num: Int = 16): String {
-    var buffer = this.trim()
+    val buffer = this.trim()
     if (buffer.length < num) {
         return buffer
     }
     return this.substring(0, num).trim().plus("...")
 }
 
-// TODO реализовать
 fun String.stripHtml(): String {
-    return ""
+    return this.replace("<[^>]*>".toRegex(), "")
+        .replace("\\s+".toRegex(), " ")
 }

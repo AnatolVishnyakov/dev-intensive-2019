@@ -11,26 +11,6 @@ const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 const val YEAR = 366 * DAY
 
-fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
-    val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
-    return dateFormat.format(this)
-}
-
-fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
-    var time = this.time
-
-    time += when (units) {
-        TimeUnits.SECOND -> value * SECOND
-        TimeUnits.MINUTE -> value * MINUTE
-        TimeUnits.HOUR -> value * HOUR
-        TimeUnits.DAY -> value * DAY
-        TimeUnits.YEAR -> value * YEAR
-    }
-
-    this.time = time
-    return this
-}
-
 private val DECLENSION_PERIOD = object : HashMap<String, String>() {
     init {
         // секунды
@@ -84,16 +64,39 @@ private fun declension(value: Long, units: TimeUnits): String? {
     }
 }
 
-private fun trimToMidnight(date: Date) {
-    var calendar = Calendar.getInstance()
-    calendar
+fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
+    return SimpleDateFormat(pattern, Locale("ru")).format(this)
+}
+
+fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
+    this.time += when (units) {
+        TimeUnits.SECOND -> value * SECOND
+        TimeUnits.MINUTE -> value * MINUTE
+        TimeUnits.HOUR -> value * HOUR
+        TimeUnits.DAY -> value * DAY
+        TimeUnits.YEAR -> value * YEAR
+    }
+
+    return this
+}
+
+fun Date.trimToMilliSecond(): Date {
+    val calendar = Calendar.getInstance()
+    calendar.time = this
+    calendar.set(Calendar.MILLISECOND, 0)
+    return calendar.time
 }
 
 fun Date.humanizeDiff(date: Date = Date()): String {
-    var prefix = if (this > date) "через " else ""
-    var postfix = if (this < date) " назад" else ""
-    val diffTime = if (date > this) date.time - this.time else this.time - date.time
-    return when (abs(diffTime)) {
+    val prefix = if (this > date) "через " else ""
+    val postfix = if (this < date) " назад" else ""
+
+    val currentDate = this.trimToMilliSecond()
+    val otherDate = date.trimToMilliSecond()
+    val diffTime = if (otherDate > currentDate) otherDate.time - currentDate.time
+    else currentDate.time - otherDate.time
+
+    return when (diffTime) {
         in 0..SECOND -> "только что"
         in SECOND..45 * SECOND -> "${prefix}несколько секунд$postfix"
         in 45 * SECOND..75 * SECOND -> "${prefix}минуту$postfix"
