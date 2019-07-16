@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-
 const val SECOND = 1000L
 const val MINUTE = 60 * SECOND
 const val HOUR = 60 * MINUTE
