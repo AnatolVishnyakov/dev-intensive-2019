@@ -15,11 +15,14 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         val (isValidate, warning) = validate(answer)
 
         if (!isValidate) {
-            status = status.nextStatus()
+//            status = status.nextStatus()
             return "$warning\n${question.question}" to status.color
         }
-        return if (question.answer.contains(answer)) {
+        return if (question == Question.IDLE) {
+            "На этом все, вопросов больше нет" to Status.NORMAL.color
+        } else if (question.answer.contains(answer)) {
             if (question == Question.IDLE) {
+                question = question.nextQuestion()
                 "Отлично - ты справился\nНа этом все, вопросов больше нет" to Status.NORMAL.color
             } else {
                 question = question.nextQuestion()
@@ -29,7 +32,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             if (status == Status.CRITICAL) {
                 status = Status.NORMAL
                 question = Question.NAME
-                "Это неправильный ответ! Давай все по новой\n${question.question}" to status.color
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
             } else {
                 status = status.nextStatus()
                 "Это неправильный ответ\n${question.question}" to status.color
