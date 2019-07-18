@@ -41,8 +41,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     private fun validate(answer: String): Pair<Boolean, String> {
         return when (question) {
-            Question.NAME -> if (answer[0]?.isLowerCase()) false to "Имя должно начинаться с заглавной буквы" else true to ""
-            Question.PROFESSION -> if (answer[0]?.isUpperCase()) false to "Профессия должна начинаться со строчной буквы" else true to ""
+            Question.NAME -> if (answer.isNotBlank() && answer[0].isLowerCase()) false to "Имя должно начинаться с заглавной буквы" else true to ""
+            Question.PROFESSION -> if (answer.isNotBlank() && answer[0].isUpperCase()) false to "Профессия должна начинаться со строчной буквы" else true to ""
             Question.MATERIAL -> if (answer.contains("\\d".toRegex())) false to "Материал не должен содержать цифр" else true to ""
             Question.BDAY -> if (!answer.contains("^[0-9]+\$".toRegex())) false to "Год моего рождения должен содержать только цифры" else true to ""
             Question.SERIAL -> if (!answer.contains("^\\d{7}$".toRegex())) false to "Серийный номер содержит только цифры, и их 7" else true to ""
