@@ -12,31 +12,39 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-        val (isValidate, warning) = when (question) {
-            Question.NAME -> if (answer[0].isLowerCase()) false to "Имя должно начинаться с заглавной буквы" else true to ""
-            Question.PROFESSION -> if (answer[0].isUpperCase()) false to "Профессия должна начинаться со строчной буквы" else true to ""
-            Question.MATERIAL -> if (answer.contains("\\d")) false to "Материал не должен содержать цифр" else true to ""
-            Question.BDAY -> if (answer.contains("\\w")) false to "Год моего рождения должен содержать только цифры" else true to ""
-            Question.SERIAL -> if (answer.length != 7 || answer.contains("\\w")) false to "Серийный номер содержит только цифры, и их 7" else true to ""
-            else -> true to ""
-        }
+        val (isValidate, warning) = validate(answer)
 
         if (!isValidate) {
             status = status.nextStatus()
             return "$warning\n${question.question}" to status.color
         }
         return if (question.answer.contains(answer)) {
-            question = question.nextQuestion()
-            "Отлично - ты справился!\n${question.question}" to status.color
+            if (question == Question.IDLE) {
+                "Отлично - ты справился\nНа этом все, вопросов больше нет" to Status.NORMAL.color
+            } else {
+                question = question.nextQuestion()
+                "Отлично - ты справился\n${question.question}" to status.color
+            }
         } else {
             if (status == Status.CRITICAL) {
                 status = Status.NORMAL
                 question = Question.NAME
-                "Это не правильный ответ! Давай все по новой\n${question.question}" to status.color
+                "Это неправильный ответ! Давай все по новой\n${question.question}" to status.color
             } else {
                 status = status.nextStatus()
-                "Это не правильный ответ!\n${question.question}" to status.color
+                "Это неправильный ответ\n${question.question}" to status.color
             }
+        }
+    }
+
+    private fun validate(answer: String): Pair<Boolean, String> {
+        return when (question) {
+            Question.NAME -> if (answer[0].isLowerCase()) false to "Имя должно начинаться с заглавной буквы" else true to ""
+            Question.PROFESSION -> if (answer[0].isUpperCase()) false to "Профессия должна начинаться со строчной буквы" else true to ""
+            Question.MATERIAL -> if (answer.contains("\\d".toRegex())) false to "Материал не должен содержать цифр" else true to ""
+            Question.BDAY -> if (!answer.contains("^[0-9]+\$".toRegex())) false to "Год моего рождения должен содержать только цифры" else true to ""
+            Question.SERIAL -> if (!answer.contains("^\\d{7}$".toRegex())) false to "Серийный номер содержит только цифры, и их 7" else true to ""
+            else -> true to ""
         }
     }
 
@@ -56,7 +64,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     enum class Question(val question: String, val answer: List<String>) {
-        NAME("Как меня зовут?", listOf("бендер", "bender")) {
+        NAME("Как меня зовут?", listOf("Бендер", "Bender")) {
             override fun nextQuestion(): Question = PROFESSION
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
@@ -71,7 +79,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE("На этом все, вопросов больше нет.", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
         };
 
