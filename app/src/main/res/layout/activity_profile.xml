@@ -144,7 +144,94 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_normal_16">
 
+        <ImageView
+            android:id="@+id/ic_avatar"
+            android:layout_width="@dimen/btn_round_size_40"
+            android:layout_height="@dimen/btn_round_size_40"
+            android:src="@drawable/ic_avatar" />
+
+        <!-- TextInputLayout (выполнен по material guideline):
+             обёртка над стандартным EditText,
+             при нажатии на поле hint поднимается и опускается,
+             красиво валидировать ошибки -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wr_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal_16"
+            android:layout_toRightOf="@id/ic_avatar">
+
+            <EditText
+                android:id="@+id/et_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Имя" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wr_first_name"
+            android:layout_marginLeft="@dimen/spacing_normal_16"
+            android:layout_toRightOf="@id/ic_avatar">
+
+            <EditText
+                android:id="@+id/et_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Фамилия" />
+        </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
+
+    <!-- О себе -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_normal_16">
+
+        <ImageView
+            android:layout_width="@dimen/btn_round_size_40"
+            android:layout_height="@dimen/btn_round_size_40"
+            android:src="@drawable/ic_about"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal_16">
+
+            <EditText
+                android:id="@+id/et_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="О себе" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_normal_16">
+
+        <ImageView
+            android:layout_width="@dimen/btn_round_size_40"
+            android:layout_height="@dimen/btn_round_size_40"
+            android:src="@drawable/ic_repo"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal_16">
+
+            <EditText
+                android:id="@+id/et_repository"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Репозиторий" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 </LinearLayout>
