@@ -51,25 +51,22 @@
 
             <TextView
                 android:id="@+id/tv_name"
+                style="@style/Profile.Header.Nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iv_avatar"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/spacing_normal_16"
-                android:text="John Doe"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_large_20" />
+                android:text="John Doe" />
 
             <!-- tools - режим редактора (не попадают в разметку запущенного приложения) -->
             <TextView
                 android:id="@+id/tv_rank"
+                style="@style/Profile.Header.Rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
                 android:layout_centerHorizontal="true"
-                android:text="Junior Android Developer"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_normal_16" />
+                android:text="Junior Android Developer" />
 
         </RelativeLayout>
     </FrameLayout>
@@ -90,21 +87,18 @@
             android:paddingBottom="@dimen/spacing_normal_16">
 
             <TextView
+                style="@style/Profile.Metrics.Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_sp_24"
-                android:drawablePadding="@dimen/spacing_tiny_4"
-                android:fontFamily="sans-serif-medium"
                 android:text="0"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_large_20" />
+                android:textColor="@android:color/white" />
 
             <TextView
+                style="@style/Profile.Metrics.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_label_rating"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_normal_16" />
+                android:text="@string/profile_label_rating" />
         </LinearLayout>
 
         <View
@@ -124,28 +118,24 @@
             android:paddingBottom="@dimen/spacing_normal_16">
 
             <TextView
+                style="@style/Profile.Metrics.Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_respect_24"
-                android:drawablePadding="@dimen/spacing_tiny_4"
-                android:fontFamily="sans-serif-medium"
-                android:text="0"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_large_20" />
+                android:text="0" />
 
             <TextView
+                style="@style/Profile.Metrics.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_label_respect"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_normal_16" />
+                android:text="@string/profile_label_respect" />
         </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
+        style="@style/Profile.InfoItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_normal_16">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ic_avatar"
@@ -166,9 +156,13 @@
 
             <EditText
                 android:id="@+id/et_first_name"
+                style="@style/Profile.EditText.Single"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/profile_hint_first_name" />
+                android:hint="@string/profile_hint_first_name"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                tools:text="John" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -180,9 +174,13 @@
 
             <EditText
                 android:id="@+id/et_last_name"
+                style="@style/Profile.EditText.Single"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/profile_hint_last_name" />
+                android:hint="@string/profile_hint_last_name"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                tools:text="Doe" />
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
 
@@ -194,15 +192,15 @@
 
     <!-- О себе -->
     <LinearLayout
+        style="@style/Profile.InfoItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_normal_16">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/btn_round_size_40"
             android:layout_height="@dimen/btn_round_size_40"
-            android:src="@drawable/ic_about"/>
+            android:src="@drawable/ic_about" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -211,9 +209,10 @@
 
             <EditText
                 android:id="@+id/et_about"
+                style="@style/Profile.EditText.MultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/profile_hint_about" />
+                android:hint="@string/profile_hint_about"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -224,15 +223,15 @@
         android:background="@color/color_divider_dark" />
 
     <LinearLayout
+        style="@style/Profile.InfoItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_normal_16">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/btn_round_size_40"
             android:layout_height="@dimen/btn_round_size_40"
-            android:src="@drawable/ic_repo"/>
+            android:src="@drawable/ic_repo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -243,17 +242,20 @@
 
             <EditText
                 android:id="@+id/et_repository"
+                style="@style/Profile.EditText.Single"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/profile_hint_repository" />
+                android:hint="@string/profile_hint_repository"
+                android:inputType="textUri"
+                android:imeOptions="actionDone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- 24dp: размер иконки в material design -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_eye_24dp"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_eye_24dp" />
     </LinearLayout>
 
 </LinearLayout>
