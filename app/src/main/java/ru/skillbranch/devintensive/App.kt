@@ -20,9 +20,9 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        PreferencesRepository.getAppTheme().also {
-//            AppCompatDelegate.setDefaultNightMode(it)
-//        }
+        PreferencesRepository.getAppTheme().also {
+            AppCompatDelegate.setDefaultNightMode(it)
+        }
         // TODO call once when application created
     }
 }
