@@ -39,10 +39,12 @@ class ProfileActivity : AppCompatActivity() {
      * Всегда сопровождается вызовом onStart().
      * */
     override fun onCreate(savedInstanceState: Bundle?) {
+        // TODO set custom Theme this before super and setContentView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
+        Log.d("M_ProfileActivity", "onCreate")
     }
 
     /**
@@ -160,6 +162,12 @@ class ProfileActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
+        viewModel.getTheme().observe(this, Observer { updateTheme(it) })
+    }
+
+    private fun updateTheme(mode: Int) {
+        Log.d("M_ProfileActivity", "updateTheme")
+        delegate.setLocalNightMode(mode)
     }
 
     private fun updateUI(profile: Profile) {
@@ -192,6 +200,21 @@ class ProfileActivity : AppCompatActivity() {
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
+
+        btn_switch_theme.setOnClickListener {
+            viewModel.switchTheme()
+        }
+    }
+
+    private fun saveProfileInfo() {
+        Profile(
+            firstName = et_first_name.text.toString(),
+            lastName = et_last_name.text.toString(),
+            about = et_about.text.toString(),
+            repository = et_repository.text.toString()
+        ).apply {
+            viewModel.saveProfileData(this)
+        }
     }
 
     private fun showCurrentMode(isEdit: Boolean) {
@@ -218,24 +241,13 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             val icon = if (isEdit) {
-                resources.getDrawable(R.drawable.ic_save_black_24dp)
+                resources.getDrawable(R.drawable.ic_save_black_24dp, theme)
             } else {
-                resources.getDrawable(R.drawable.ic_edit_black_24dp)
+                resources.getDrawable(R.drawable.ic_edit_black_24dp, theme)
             }
 
             background.colorFilter = filter
             setImageDrawable(icon)
-        }
-    }
-
-    private fun saveProfileInfo() {
-        Profile(
-            firstName = et_first_name.text.toString(),
-            lastName = et_last_name.text.toString(),
-            about = et_about.text.toString(),
-            repository = et_repository.text.toString()
-        ).apply {
-            viewModel.saveProfileData(this)
         }
     }
 }
